@@ -1,0 +1,94 @@
+*,
+*:before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* criando variaveis cores */
+  --content-primary: #ffffff;
+  --content-secondary: #c7c9cc;
+  --content-tertiary: #d9d9d9;
+  --content-brand: #c58de7;
+  --color-inverse: #030203;
+
+  --background-primary: #020202;
+  --background-secondary: #111012;
+  --background-tertiary: #24222e;
+  --background-brand: #c58de7;
+  --background-gray: #3d3d3d;
+
+  --accent-pink: #d586e0;
+  --accent-blue: #91a1fa;
+  --accent-green: #77c0af;
+  --accent-lime: #d1dc97;
+  --accent-red: #e9a9b3;
+
+  --gradient-border: liner-gradient(
+    90deg,
+    var(--accent-green) 0%,
+    var(--accent-lime) 14.84%,
+    var(--accent-red) 32.15%,
+    var(--accent-pink) 65.79%,
+    var(--accent-blue) 84.58%
+  );
+
+  --gradient-background: linear-gradient(
+    90deg,
+    var(--accent-pink) 0%,
+    var(--accent-blue) 98.93%
+  );
+
+  --gradient-content: linear-gradient(
+    90deg,
+    var(--content-secondary) 0%,
+    var(--background-gray) 100%
+  );
+
+  /* variaveis de tipografia */
+  --sora: "Sora", sans-serif;
+  --display-lg: 800 4.5rem/130% var(--sora);
+  --display-md: 800 2.5rem/130% var(--sora);
+  --display-sm: 700 2rem/130% var(--sora);
+
+  --roboto-mono: "Roboto Mono", monospace;
+  --overline: 700 1rem/150% var(--roboto-mono);
+
+  --roboto-flex: "Roboto Flex", sans-serif;
+  --p-lg: 500 1rem/150% var(--roboto-flex);
+  --p-md: 500 0.875rem/150% var(--roboto-flex);
+  --p-sm: 500 0.75rem/150% var(--roboto-flex);
+  --label-md: 700 1.25rem/150% var(--roboto-flex);
+  --label-sm: 700 1rem/150% var(--roboto-flex);
+}
+
+body {
+  text-decoration: none;
+}
+
+/* classes utilitarias */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-col {
+  grid-template-columns: 1fr;
+}
+
+.desktop-only {
+  display: none;
+}
