@@ -65,7 +65,14 @@
 }
 
 body {
-  text-decoration: none;
+  background-image: url("../assets/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: linear-gradient(
+    90deg,
+    var(--background-primary) 50%,
+    var(--background-secondary) 100%
+  );
 }
 
 /* classes utilitarias */
@@ -90,5 +97,5 @@ body {
 }
 
 .desktop-only {
-  display: none;
+  display: initial;
 }
