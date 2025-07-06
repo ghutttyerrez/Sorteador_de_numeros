@@ -7,26 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Sora:wght@100..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Flex:opsz@8..144&family=Roboto+Mono:ital@0;1&family=Sora:wght@700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style/index.css" />
     <title>Numbers</title>
   </head>
-  <body>
+  <body class="container">
     <header class="logo flex">
       <img src="./assets/Logo.svg" alt="" />
       <span>NUMBERS</span>
     </header>
 
     <main class="grid">
-      <div class="title">
+      <div class="title flex-col">
         <h2>ONLINE - GRATUITO</h2>
         <h1>SORTEADOR DE NUMEROS</h1>
       </div>
 
       <div class="desktop-only">
-        <section class="flex">
+        <section class="flex info">
           <img src="./assets/icons/Frame-2.svg" alt="" />
           <div>
             <h3>Como funciona o sorteador de números?</h3>
@@ -37,7 +37,7 @@
             </p>
           </div>
         </section>
-        <section class="flex">
+        <section class="flex info">
           <img src="./assets/icons/Frame-2.svg" alt="" />
           <div>
             <h3>Posso escolher o intervalo dos números?</h3>
@@ -51,8 +51,8 @@
     </main>
 
     <aside class="grid">
-      <section>
-        <h2>QUERO SORTEAR</h2>
+      <section class="info-draw flex flex-col">
+        <h2>QUERO SORTEAR:</h2>
         <p>
           Defina o intervalo e a quantidade de números, clique em "Sortear" e
           veja os resultados na tela. É rápido e fácil!
@@ -76,7 +76,7 @@
             </div>
 
             <div class="inpt-number">
-              <label for="quantity">de</label>
+              <label for="quantity">DE</label>
               <div class="inpt-wrapper">
                 <input
                   type="text"
@@ -102,8 +102,8 @@
             </div>
           </div>
 
-          <div class="checkbox">
-            <div class="grid">
+          <div id="checkbox">
+            <div class="flex">
               <div class="btn">
                 <input type="checkbox" id="check" name="check" />
               </div>
@@ -112,15 +112,15 @@
           </div>
         </fieldset>
 
-        <button class="btn">
-          Sortear
+        <button class="draw-one">
+          SORTEAR
           <img src="./assets/icons/Frame-1.svg" alt="" />
         </button>
       </form>
     </aside>
 
     <footer>
-      <section class="flex">
+      <section class="flex info">
         <img src="./assets/icons/Frame-2.svg" alt="" />
         <div>
           <h3>Como funciona o sorteador de números?</h3>
@@ -131,7 +131,7 @@
           </p>
         </div>
       </section>
-      <section class="flex">
+      <section class="flex info">
         <img src="./assets/icons/Frame-2.svg" alt="" />
         <div>
           <h3>Posso escolher o intervalo dos números?</h3>
