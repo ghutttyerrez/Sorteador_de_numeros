@@ -121,4 +121,18 @@ body {
 .container {
   max-width: min(var(--max-width), 100% - 2 * var(--pg-margin));
   margin-inline: auto;
+  margin-top: 5rem;
+}
+
+@media (width >= 900px) {
+  body {
+    display: flex;
+    justify-content: center;
+    gap: 6.75rem;
+  }
+
+  #page {
+    display: flex;
+    flex-direction: column;
+  }
 }

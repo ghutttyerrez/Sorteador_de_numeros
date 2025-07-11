@@ -45,3 +45,15 @@ main {
     }
   }
 }
+
+@media (width >= 1280px) {
+  main {
+    display: flex;
+    flex-direction: column;
+   
+  }
+
+  & .desktop-only {
+    display: initial;
+  }
+}

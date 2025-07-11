@@ -1,5 +1,5 @@
 header {
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 3rem;
   gap: 0.6875rem;
   align-items: center;
@@ -7,5 +7,23 @@ header {
   & span {
     font: 700 1.5rem/130% var(--sora);
     color: var(--content-primary);
+  }
+}
+
+@media (width >= 1280px) {
+  header {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 26rem;
+
+    & span {
+      font: 700 2rem/130% var(--sora);
+    }
+  }
+
+  @media (width <= 378px) {
+    header {
+      justify-content: center;
+    }
   }
 }

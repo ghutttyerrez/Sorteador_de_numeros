@@ -1,7 +1,12 @@
 footer {
-  section {
-    margin: 2.25rem;
+  & #information {
+    gap: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    margin-block: 5rem 2.5rem;
+  }
 
+  section {
     &.info {
       gap: 0.5rem;
 
@@ -20,5 +25,13 @@ footer {
         font: var(--p-sm);
       }
     }
+  }
+}
+
+
+
+@media (width >= 900px) {
+  footer {
+    display: none;
   }
 }
