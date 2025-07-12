@@ -1,4 +1,11 @@
 aside {
+  max-width: 26rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 21.5rem;
+
   & section.info-draw {
     & h2 {
       font: var(--label-md);
@@ -10,6 +17,16 @@ aside {
       color: var(--content-tertiary);
       margin-bottom: 2.5rem;
     }
+
+    .info-draw {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  padding: 1.5rem 0; 
+  box-sizing: border-box;
+  min-height: 133px; 
+  max-height: 413.5px; 
+}
   }
 
   & form {
@@ -311,15 +328,27 @@ aside {
   }
 }
 
+
 @media (950px <= width <= 1280px) {
   aside {
     max-width: 22rem;
   }
 }
 
-@media (width <= 1280px) {
+@media (width >= 1280px) {
   aside {
     max-width: 26rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     max-height: 21.5rem;
   }
+
+  .info-draw {
+    width: 100%;
+    max-width: 24rem;
+    margin: 0 auto;
+  }
 }
+

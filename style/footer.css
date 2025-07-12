@@ -30,7 +30,7 @@ footer {
 
 
 
-@media (width >= 900px) {
+@media (width >= 950px) {
   footer {
     display: none;
   }

@@ -15,15 +15,13 @@ header {
     display: flex;
     justify-content: flex-start;
     max-width: 26rem;
-
-    & span {
-      font: 700 2rem/130% var(--sora);
-    }
   }
 
-  @media (width <= 378px) {
+}
+
+ @media (min-width: 368px) and (max-width: 950px) {
     header {
       justify-content: center;
+      margin-inline: auto;
     }
   }
-}

@@ -1,4 +1,6 @@
 main {
+  margin-inline: auto;
+
   & .title {
     padding: 2.875rem 0 2.625rem 0;
 
@@ -23,7 +25,7 @@ main {
   }
 
   section {
-    margin: 2.25rem;
+    margin-block: 2.25rem;
 
     &.info {
       gap: 0.5rem;
@@ -46,14 +48,19 @@ main {
   }
 }
 
-@media (width >= 1280px) {
+@media (width >= 950px) {
   main {
     display: flex;
     flex-direction: column;
-   
   }
+
+  section {
+    margin-block: 2.25rem 0 !important;
+  }
+
 
   & .desktop-only {
     display: initial;
+    
   }
 }

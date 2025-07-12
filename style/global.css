@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 :root {
   /* criando variaveis cores */
   --content-primary: #ffffff;
@@ -63,13 +67,14 @@
   --label-md: 700 1.25rem/150% var(--roboto-flex);
   --label-sm: 700 1rem/150% var(--roboto-flex);
 
-  --max-width: 375px;
+  --max-width: 1098px;
   --pg-margin: 2.25rem;
 }
 
 body {
   background-color: var(--background-primary);
   overflow: hidden;
+  overflow-x: hidden;
   justify-content: center;
   position: relative;
   min-height: 100vh;
@@ -124,11 +129,17 @@ body {
   margin-top: 5rem;
 }
 
-@media (width >= 900px) {
+@media (width >= 950px) {
   body {
+    max-width: 80rem;
+    max-height: 26rem;
+    width: 100%;
+    margin-inline: auto;
+    padding: 0 24px;
     display: flex;
     justify-content: center;
     gap: 6.75rem;
+    
   }
 
   #page {
