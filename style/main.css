@@ -1,8 +1,8 @@
 main {
-  margin-inline: auto;
+  margin-inline: none;
 
   & .title {
-    padding: 2.875rem 0 2.625rem 0;
+    padding-top: 2.25rem;
 
     & h2 {
       font: var(--overline) var(--roboto-mono);
@@ -52,15 +52,23 @@ main {
   main {
     display: flex;
     flex-direction: column;
+
+    & .title {
+      & h1 {
+        font: var(--display-lg);
+      }
+    }
+
+    & #information {
+      margin-top: -1rem;
+    }
   }
 
   section {
     margin-block: 2.25rem 0 !important;
   }
 
-
   & .desktop-only {
     display: initial;
-    
   }
 }

@@ -74,7 +74,6 @@ html {
 body {
   background-color: var(--background-primary);
   overflow: hidden;
-  overflow-x: hidden;
   justify-content: center;
   position: relative;
   min-height: 100vh;
@@ -139,7 +138,17 @@ body {
     display: flex;
     justify-content: center;
     gap: 6.75rem;
-    
+  }
+
+  #page {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 550px) and (max-width: 950px) {
+  body {
+    width: 70%;
   }
 
   #page {
