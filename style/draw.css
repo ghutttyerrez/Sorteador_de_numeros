@@ -1,0 +1,181 @@
+.space {
+  max-width: 100%;
+  width: 100%;
+  min-height: 18rem;
+  max-height: max-content;
+  padding-block: 4.5rem 2.5rem;
+  display: grid;
+  justify-content: center;
+}
+
+.sub-title {
+  font: var(--overline);
+  color: var(--content-secondary);
+  text-align: center;
+}
+
+.result {
+  text-align: center;
+  font: var(label-md);
+  color: var(--content-primary);
+}
+
+/*div pai dos numeros sorteador */
+.div-sorted-numbers {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  margin-top: 2.5rem;
+}
+
+/* div que irá conter cada número sorteado */
+.number-sorted {
+  font: var(--number-mono);
+  color: var(--content-brand);
+  animation: noRotation 700ms ease 700ms, scale 500ms forwards ease,
+    diminuteScale 500ms ease 2s forwards,
+    colorInverse 100ms linear 900ms forwards,
+    colorReturn 100ms linear 2s forwards;
+}
+/* animação que o número terá ao aparecer */
+
+.animation-number {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  background-color: var(--content-brand);
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 1.75rem;
+  animation: scale 500ms forwards ease, rotation 700ms ease 700ms,
+    backTransparent 500ms ease 2s forwards, diminuteScale 500ms ease 2s forwards;
+}
+
+/* Transição para aparecer o botão */
+.appear-button {
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+@keyframes colorInverse {
+  100% {
+    color: var(--color-inverse);
+  }
+}
+
+@keyframes colorReturn {
+  100% {
+    color: var(--content-brand);
+  }
+}
+
+@keyframes scale {
+  0% {
+    scale: 0;
+  }
+  100% {
+    scale: 1.05;
+  }
+}
+
+@keyframes rotation {
+  10% {
+    transform: rotate(18deg);
+  }
+  20% {
+    transform: rotate(36deg);
+  }
+  30% {
+    transform: rotate(54deg);
+  }
+  40% {
+    transform: rotate(72deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  60% {
+    transform: rotate(108deg);
+  }
+  70% {
+    transform: rotate(126deg);
+  }
+  80% {
+    transform: rotate(144deg);
+  }
+  90% {
+    transform: rotate(162deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes noRotation {
+  10% {
+    transform: rotate(-18deg);
+  }
+  20% {
+    transform: rotate(-36deg);
+  }
+  30% {
+    transform: rotate(-54deg);
+  }
+  40% {
+    transform: rotate(-72deg);
+  }
+  50% {
+    transform: rotate(-90deg);
+  }
+  60% {
+    transform: rotate(-108deg);
+  }
+  70% {
+    transform: rotate(-126deg);
+  }
+  80% {
+    transform: rotate(-144deg);
+  }
+  90% {
+    transform: rotate(-162deg);
+  }
+  100% {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes backTransparent {
+  to {
+    background-color: transparent;
+  }
+}
+
+@keyframes diminuteScale {
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes moveNumber {
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (950px <= width < 1200px) {
+  .space {
+    width: 22rem;
+    padding-block: 0 2rem;
+  }
+}
+
+@media (width >= 1200px) {
+  .space {
+    width: 26rem;
+  }
+}

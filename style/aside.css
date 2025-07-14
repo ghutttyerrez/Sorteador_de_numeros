@@ -329,7 +329,7 @@ aside {
 @media (950px <= width <= 1280px) {
   aside {
     max-width: 22rem;
-    margin-top: 5rem;
+    margin-top: 5.5rem;
   }
 }
 
@@ -341,7 +341,7 @@ aside {
     flex-direction: column;
     align-items: center;
     max-height: 21.5rem;
-    margin-top: 5rem;
+    margin-top: 5.5rem;
   }
 
   .info-draw {
