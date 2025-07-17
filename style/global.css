@@ -59,6 +59,7 @@ html {
 
   --roboto-mono: "Roboto Mono", monospace;
   --overline: bold 1rem/150% var(--roboto-mono);
+  --number-mono: 600 3rem/1.5 var(--roboto-mono);
 
   --roboto-flex: "Roboto Flex", sans-serif;
   --p-lg: 500 1rem/150% var(--roboto-flex);
@@ -67,7 +68,7 @@ html {
   --label-md: 700 1.25rem/150% var(--roboto-flex);
   --label-sm: 700 1rem/150% var(--roboto-flex);
 
-  --max-width: 1098px;
+  --max-width: 1280px;
   --pg-margin: 2.25rem;
 }
 
@@ -128,7 +129,34 @@ body {
   margin-top: 5rem;
 }
 
-@media (width >= 950px) {
+/* Mobile First - Base styles for mobile */
+@media (max-width: 767px) {
+  body {
+    width: 100%;
+    margin-inline: auto;
+    padding: 0 16px;
+  }
+  
+  .container {
+    margin-top: 3rem;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  body {
+    width: 90%;
+    margin-inline: auto;
+    padding: 0 20px;
+  }
+  
+  .container {
+    margin-top: 4rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) and (max-width: 1279px) {
   body {
     max-width: 80rem;
     max-height: 26rem;
@@ -146,13 +174,25 @@ body {
   }
 }
 
-@media (min-width: 550px) and (max-width: 950px) {
+/* Large Desktop */
+@media (min-width: 1280px) {
   body {
-    width: 70%;
+    max-width: 80rem;
+    max-height: 26rem;
+    width: 100%;
+    margin-inline: auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+    gap: 6.75rem;
   }
 
   #page {
     display: flex;
     flex-direction: column;
+  }
+  
+  .container {
+    max-width: 1280px;
   }
 }

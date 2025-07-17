@@ -64,43 +64,26 @@
 
       <form method="post" enctype="multipart/form-data">
         <fieldset>
+          <legend>Configurações do Sorteio</legend>
           <div class="flex">
             <div class="inpt-number">
               <label for="draw">NÚMEROS</label>
               <div class="inpt-wrapper">
-                <input
-                  type="text"
-                  id="draw"
-                  name="draw"
-                  class="nan"
-                  value="2"
-                />
+                <input type="text" id="draw" name="draw" value="2" />
               </div>
             </div>
 
             <div class="inpt-number">
-              <label for="quantity">DE</label>
+              <label for="initial">DE</label>
               <div class="inpt-wrapper">
-                <input
-                  type="text"
-                  id="initial"
-                  name="quantity"
-                  class="nan"
-                  value="1"
-                />
+                <input type="text" id="initial" name="initial" value="1" />
               </div>
             </div>
 
             <div class="inpt-number">
-              <label for="total">A</label>
+              <label for="final">A</label>
               <div class="inpt-wrapper">
-                <input
-                  type="text"
-                  id="final"
-                  name="total"
-                  class="nan"
-                  value="100"
-                />
+                <input type="text" id="final" name="final" value="100" />
               </div>
             </div>
           </div>
@@ -111,19 +94,20 @@
                 <input type="checkbox" id="check" name="check" />
               </div>
             </div>
-            <label>Não repetir numero</label>
+            <label for="check">Não repetir numero</label>
           </div>
         </fieldset>
 
-        <button class="draw-one">
+        <button type="button" class="draw-one">
           SORTEAR
           <img src="./assets/icons/Frame-1.svg" alt="" />
         </button>
+        <button type="submit" style="display: none">Submit</button>
       </form>
     </aside>
 
     <footer>
-      <div id="information">
+      <div id="footer-information">
         <section class="flex info">
           <img src="./assets/icons/Frame-2.svg" alt="" />
           <div>
