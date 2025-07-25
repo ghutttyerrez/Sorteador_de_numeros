@@ -216,14 +216,11 @@ function handleSubmit(event) {
   const amountInput = document.getElementById("draw");
   const initialInput = document.getElementById("initial");
   const finalInput = document.getElementById("final");
-  // O checkbox `checked` retorna true se marcado. Queremos `allowRepeats = true` se marcado.
-  // Sua lógica anterior `!document.querySelector("input[type='checkbox']").checked`
-  // estava invertida se o objetivo era "permitir repetição" quando o checkbox está marcado.
-  // Assumindo que o checkbox é "Permitir Repetição", então `checked` deve ser `allowRepeat`.
-  const allowRepeatsCheckbox = document.querySelector('input[type="checkbox"]');
-  const allowRepeats = allowRepeatsCheckbox
-    ? allowRepeatsCheckbox.checked
-    : false;
+  // O checkbox está marcado por padrão e significa "Não repetir número"
+  // Então: checked = true -> allowRepeats = false (não permitir repetição)
+  //       checked = false -> allowRepeats = true (permitir repetição)
+  const noRepeatCheckbox = document.querySelector('input[type="checkbox"]');
+  const allowRepeats = noRepeatCheckbox ? !noRepeatCheckbox.checked : true;
 
   // 2. Valida os inputs.
   const validatedValues = validateInputs(
@@ -258,12 +255,27 @@ function handleSubmit(event) {
       if (currentLotteryInstance) {
         const nextSortedNumbers = currentLotteryInstance.draw();
         drawAttemptCount++; // Incrementa para o novo sorteio.
+
+        // Função recursiva para permitir múltiplos sorteios
+        const performNewDraw = () => {
+          if (currentLotteryInstance) {
+            const newNumbers = currentLotteryInstance.draw();
+            drawAttemptCount++;
+            renderDrawResults(
+              newNumbers,
+              mainContainer,
+              drawAttemptCount,
+              performNewDraw
+            );
+          }
+        };
+
         renderDrawResults(
           nextSortedNumbers,
           mainContainer,
           drawAttemptCount,
-          this
-        ); // 'this' refere-se ao callback atual para recursividade.
+          performNewDraw
+        );
       }
     });
   } catch (error) {
