@@ -1,221 +1,290 @@
 "use strict";
 
-// Seleciona os elementos do DOM
-const form = document.querySelector("form");
-const aside = document.querySelector("aside"); // O <aside> contém o formulário
-const quantityInput = document.getElementById("draw");
-const minInput = document.getElementById("initial");
-const maxInput = document.getElementById("final");
-const uniqueCheckbox = document.getElementById("check");
-const drawButton = document.querySelector(".draw-one");
-
-let drawCount = 0;
-
-// Função para realizar o sorteio
-function performDraw() {
-  // Converte os valores dos inputs para números inteiros
-  const quantity = parseInt(quantityInput.value);
-  const min = parseInt(minInput.value);
-  const max = parseInt(maxInput.value);
-
-  // Validação dos dados
-  if (min >= max) {
-    alert("O valor inicial deve ser menor que o valor final.");
-    return;
-  }
-  if (quantity <= 0) {
-    alert("A quantidade de números a sortear deve ser maior que zero.");
-    return;
-  }
-  if (uniqueCheckbox.checked && quantity > max - min + 1) {
-    alert(
-      "Não é possível sortear essa quantidade de números únicos no intervalo definido."
-    );
-    return;
-  }
-
-  // Gera os números sorteados
-  const drawnNumbers = generateNumbers(
-    quantity,
-    min,
-    max,
-    uniqueCheckbox.checked
-  );
-
-  // Incrementa o contador de sorteios
-  drawCount++;
-
-  // Exibe os números na tela com animação sequencial
-  displayResultsWithAnimation(drawnNumbers);
-}
-
-// Adiciona um ouvinte de evento para o envio do formulário
-form.addEventListener("submit", (event) => {
-  // Previne o comportamento padrão do formulário (recarregar a página)
-  event.preventDefault();
-  performDraw();
-});
-
-// Adiciona um ouvinte de evento para o botão de sorteio
-drawButton.addEventListener("click", (event) => {
-  event.preventDefault();
-  performDraw();
-});
-
-/**
- * Gera uma lista de números aleatórios.
- * @param {number} quantity - A quantidade de números a serem gerados.
- * @param {number} min - O valor mínimo do intervalo.
- * @param {number} max - O valor máximo do intervalo.
- * @param {boolean} isUnique - Se os números devem ser únicos.
- * @returns {number[]} - Uma lista com os números gerados.
- */
-function generateNumbers(quantity, min, max, isUnique) {
-  const numbers = new Set();
-  if (isUnique) {
-    while (numbers.size < quantity) {
-      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-      numbers.add(randomNumber);
+// =======================================================
+// 1. CLASSE DE LÓGICA DE SORTEIO (Lottery Class)
+//    - Responsabilidade: Gerar números aleatórios dentro de um range,
+//      com ou sem repetição. Totalmente independente da UI.
+// =======================================================
+class Lottery {
+  /**
+   * Construtor para inicializar a piscina de números e as configurações do sorteio.
+   * @param {number} start - O número inicial do intervalo.
+   * @param {number} end - O número final do intervalo.
+   * @param {number} amount - A quantidade de números a serem sorteados.
+   * @param {boolean} allowRepeats - Define se números podem ser repetidos.
+   */
+  constructor(start, end, amount, allowRepeats) {
+    // Validação básica interna para garantir dados válidos antes de criar o pool
+    if (start >= end) {
+      throw new Error(
+        "O número inicial (start) deve ser menor que o final (end)."
+      );
     }
-    return Array.from(numbers);
-  } else {
+    if (amount <= 0) {
+      throw new Error(
+        "A quantidade de números a sortear (amount) deve ser maior que zero."
+      );
+    }
+    if (!allowRepeats && amount > end - start + 1) {
+      throw new Error(
+        "A quantidade de números excede o intervalo disponível sem repetição."
+      );
+    }
+
+    // Cria o array de todos os números possíveis no intervalo.
+    this.pool = Array.from({ length: end - start + 1 }, (_, i) => i + start);
+    this.amount = amount;
+    this.allowRepeats = allowRepeats;
+  }
+
+  /**
+   * Realiza o sorteio de números com base nas configurações da instância.
+   * @returns {number[]} Um array contendo os números sorteados.
+   */
+  draw() {
     const result = [];
-    for (let i = 0; i < quantity; i++) {
-      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-      result.push(randomNumber);
+    // Cria uma cópia da piscina de números para manipulação interna do sorteio,
+    // preservando o pool original para futuras chamadas de draw se necessário.
+    const currentPool = [...this.pool];
+
+    while (result.length < this.amount) {
+      // Gera um índice aleatório válido para a piscina atual.
+      const randomIndex = Math.floor(Math.random() * currentPool.length);
+
+      // Adiciona o número sorteado ao array de resultados.
+      result.push(currentPool[randomIndex]);
+
+      // Se a repetição não for permitida, remove o número sorteado da piscina atual
+      // para evitar que seja sorteado novamente.
+      if (!this.allowRepeats) {
+        currentPool.splice(randomIndex, 1);
+      }
     }
     return result;
   }
 }
 
+// =======================================================
+// 2. FUNÇÕES DE VALIDAÇÃO DE INPUTS
+//    - Responsabilidade: Verificar a validade dos dados inseridos pelo usuário.
+//    - Separação da lógica de validação da lógica de sorteio ou UI.
+// =======================================================
 /**
- * Exibe os resultados do sorteio na tela com animação sequencial.
- * @param {number[]} numbers - A lista de números sorteados.
+ * Valida os valores de entrada para o sorteio.
+ * @param {string} amountStr - Valor string da quantidade a sortear.
+ * @param {string} startStr - Valor string do número inicial.
+ * @param {string} endStr - Valor string do número final.
+ * @returns {object|boolean} Um objeto com os valores parseados se válido, ou false se inválido.
  */
-function displayResultsWithAnimation(numbers) {
-  // Limpa o conteúdo do <aside>
-  aside.innerHTML = "";
-
-  // Adiciona a classe 'space' ao <aside> para aplicar o estilo do resultado
-  aside.classList.add("space");
-  aside.classList.remove("grid"); // Garante que a classe grid seja removida
-
-  // Cria o título
-  const title = document.createElement("h1");
-  title.className = "result";
-  title.textContent = "RESULTADO DO SORTEIO";
-
-  // Cria o contador de resultados
-  const countDisplay = document.createElement("h2");
-  countDisplay.className = "sub-title";
-  countDisplay.textContent = `${drawCount}º resultado`;
-
-  // Cria a área para os números
-  const numbersArea = document.createElement("div");
-  numbersArea.className = "div-sorted-numbers";
-
-  // Cria o botão "Sortear Novamente" (inicialmente oculto)
-  const drawAgainButton = document.createElement("button");
-  drawAgainButton.className = "draw-one appear-button";
-  drawAgainButton.innerHTML = `SORTEAR NOVAMENTE <img src="./assets/icons/play.svg" alt="" class="rotate-icon">`;
-  drawAgainButton.addEventListener("click", performDraw);
-
-  // Adiciona os elementos ao <aside>
-  aside.appendChild(title);
-  aside.appendChild(countDisplay);
-  aside.appendChild(numbersArea);
-  aside.appendChild(drawAgainButton);
-
-  // Função para adicionar números com animação sequencial (padrão anterior)
-  function addNumberWithDelay(index) {
-    if (index >= numbers.length) {
-      // Todos os números foram adicionados, mostrar o botão
-      setTimeout(() => {
-        drawAgainButton.classList.add("show");
-      }, 500); // Aguarda 500ms após o último número
-      return;
-    }
-
-    // Cria o wrapper de animação para o número atual
-    const animationWrapper = document.createElement("div");
-    animationWrapper.className = "animation-number";
-
-    const numberSpan = document.createElement("span");
-    numberSpan.className = "number-sorted";
-    numberSpan.textContent = numbers[index];
-
-    animationWrapper.appendChild(numberSpan);
-    numbersArea.appendChild(animationWrapper);
-
-    // Adiciona o próximo número após um delay (padrão anterior)
-    setTimeout(() => {
-      addNumberWithDelay(index + 1);
-    }, 800); // Delay entre cada número
+function validateInputs(amountStr, startStr, endStr) {
+  // Verifica se todos os campos estão preenchidos.
+  if (!amountStr || !startStr || !endStr) {
+    alert("Por favor, preencha todos os campos!");
+    return false;
   }
 
-  // Inicia a sequência de animação
-  setTimeout(() => {
-    addNumberWithDelay(0);
-  }, 300);
+  // Converte os valores para inteiros.
+  const amount = parseInt(amountStr);
+  const start = parseInt(startStr);
+  const end = parseInt(endStr);
+
+  // Verifica se a conversão resultou em NaN (não é um número).
+  if (isNaN(amount) || isNaN(start) || isNaN(end)) {
+    alert("Por favor, insira apenas números válidos nos campos.");
+    return false;
+  }
+
+  // Verifica a lógica de intervalo: start deve ser menor que end.
+  if (start >= end) {
+    alert("O número inicial deve ser menor que o número final.");
+    return false;
+  }
+
+  // Verifica se a quantidade a sortear é maior que o intervalo disponível sem repetição.
+  // Esta validação é mais específica para o caso de não repetição, mas útil aqui.
+  // A lógica de Lottery também valida isso internamente para robustez.
+  if (amount > end - start + 1) {
+    alert(
+      "A quantidade de números a sortear é maior que o intervalo disponível."
+    );
+    return false;
+  }
+  if (amount <= 0) {
+    alert("A quantidade de números a sortear deve ser maior que zero.");
+    return false;
+  }
+
+  return { amount, start, end }; // Retorna os valores parseados se tudo OK.
+}
+
+// =======================================================
+// 3. FUNÇÕES DE RENDERIZAÇÃO DA INTERFACE (UI Rendering)
+//    - Responsabilidade: Manipular o DOM para exibir resultados e controles.
+//    - Totalmente dependente do DOM.
+// =======================================================
+const UI_CONSTANTS = {
+  ANIMATION_INTERVAL: 2000, // Tempo em ms entre a exibição de cada número.
+  BUTTON_FADE_IN_DELAY: 50, // Tempo em ms para o botão aparecer.
+};
+
+/**
+ * Renderiza os números sorteados com uma animação sequencial.
+ * @param {number[]} numbers - Array de números a serem exibidos.
+ * @param {HTMLElement} container - O elemento DOM onde os números serão renderizados.
+ * @param {number} attempt - O número da tentativa de sorteio.
+ * @param {function} onRetry - Callback para ser chamado quando o botão "Sortear Novamente" é clicado.
+ */
+function renderDrawResults(numbers, container, attempt, onRetry) {
+  // Limpa o container e ajusta classes para a nova renderização.
+  container.innerHTML = "";
+  container.classList.remove("grid"); // Assume que 'grid' é uma classe de layout anterior.
+
+  // Cria o invólucro principal para os resultados.
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("space", "container");
+
+  // Cria e adiciona o título do resultado.
+  const titleDiv = document.createElement("div");
+  titleDiv.innerHTML = `
+    <h1 class="result">Resultado do Sorteio</h1>
+    <h2 class="sub-title">${attempt}º Sorteio</h2>
+  `;
+
+  // Cria o container específico para os números sorteados.
+  const numbersContainer = document.createElement("div");
+  numbersContainer.classList.add("div-sorted-numbers");
+
+  wrapper.append(titleDiv, numbersContainer);
+  container.append(wrapper);
+
+  let i = 0;
+  // Animação para exibir os números um por um.
+  const intervalId = setInterval(() => {
+    if (i < numbers.length) {
+      const numberSpan = document.createElement("span");
+      numberSpan.textContent = numbers[i];
+      numberSpan.classList.add("number-sorted");
+
+      const animateDiv = document.createElement("div");
+      animateDiv.classList.add("animation-number");
+      animateDiv.append(numberSpan);
+
+      numbersContainer.append(animateDiv);
+      i++;
+    } else {
+      // Quando todos os números foram exibidos, limpa o intervalo e mostra o botão de retry.
+      clearInterval(intervalId);
+      createRetryButton(container, onRetry);
+    }
+  }, UI_CONSTANTS.ANIMATION_INTERVAL);
 }
 
 /**
- * Exibe os resultados do sorteio na tela, usando as classes do draw.css.
- * @param {number[]} numbers - A lista de números sorteados.
+ * Cria e adiciona um botão de "Sortear Novamente" ao container.
+ * @param {HTMLElement} container - O elemento DOM onde o botão será adicionado.
+ * @param {function} onClick - Função de callback a ser executada no clique do botão.
  */
-function displayResults(numbers) {
-  // Limpa o conteúdo do <aside>
-  aside.innerHTML = "";
+function createRetryButton(container, onClick) {
+  const btn = document.createElement("button");
+  btn.classList.add("appear-button");
+  btn.innerHTML = `SORTEAR NOVAMENTE <img src="./assets/Frame.svg" alt="rotate arrow">`;
+  btn.style.opacity = 0; // Inicia invisível para efeito de fade-in.
 
-  // Adiciona a classe 'space' ao <aside> para aplicar o estilo do resultado
-  aside.classList.add("space");
-  aside.classList.remove("grid"); // Garante que a classe grid seja removida
+  // Adiciona um pequeno atraso para o efeito de fade-in.
+  setTimeout(() => (btn.style.opacity = 1), UI_CONSTANTS.BUTTON_FADE_IN_DELAY);
+  btn.onclick = onClick; // Atribui a função de callback ao evento de clique.
 
-  // Cria o título
-  const title = document.createElement("h1");
-  title.className = "result";
-  title.textContent = "RESULTADO DO SORTEIO";
-
-  // Cria o contador de resultados
-  const countDisplay = document.createElement("h2");
-  countDisplay.className = "sub-title";
-  countDisplay.textContent = `${drawCount}º resultado`;
-
-  // Cria a área para os números
-  const numbersArea = document.createElement("div");
-  numbersArea.className = "div-sorted-numbers";
-
-  // Adiciona cada número sorteado à área com a estrutura e classes corretas
-  numbers.forEach((num) => {
-    const animationWrapper = document.createElement("div");
-    animationWrapper.className = "animation-number";
-
-    const numberSpan = document.createElement("span");
-    numberSpan.className = "number-sorted";
-    numberSpan.textContent = num;
-
-    animationWrapper.appendChild(numberSpan);
-    numbersArea.appendChild(animationWrapper);
-  });
-
-  // Cria o botão "Sortear Novamente"
-  const drawAgainButton = document.createElement("button");
-  drawAgainButton.className = "draw-one";
-  drawAgainButton.innerHTML = `SORTEAR NOVAMENTE <img src="./assets/icons/play.svg" alt="">`;
-  drawAgainButton.addEventListener("click", performDraw);
-
-  // Adiciona os elementos ao <aside>
-  aside.appendChild(title);
-  aside.appendChild(countDisplay);
-  aside.appendChild(numbersArea);
-  aside.appendChild(drawAgainButton);
+  container.append(btn);
 }
 
-// Lógica para permitir apenas números nos inputs (código original)
-const allInputs = document.querySelectorAll("input[type='text']");
-allInputs.forEach((input) => {
+// =======================================================
+// 4. LÓGICA DE CONTROLE PRINCIPAL (Event Handling & Orchestration)
+//    - Responsabilidade: Ligar tudo, lidar com eventos do usuário, gerenciar o fluxo da aplicação.
+// =======================================================
+let currentLotteryInstance = null; // Armazena a instância da Loteria atual.
+let drawAttemptCount = 0; // Contador de sorteios.
+
+/**
+ * Lida com o evento de submit do formulário.
+ * Orquestra a validação, o sorteio e a renderização dos resultados.
+ * @param {Event} event - O objeto do evento de submit.
+ */
+function handleSubmit(event) {
+  event.preventDefault(); // Previne o recarregamento da página.
+
+  // 1. Coleta os valores dos inputs.
+  const amountInput = document.getElementById("draw");
+  const initialInput = document.getElementById("initial");
+  const finalInput = document.getElementById("final");
+  // O checkbox `checked` retorna true se marcado. Queremos `allowRepeats = true` se marcado.
+  // Sua lógica anterior `!document.querySelector("input[type='checkbox']").checked`
+  // estava invertida se o objetivo era "permitir repetição" quando o checkbox está marcado.
+  // Assumindo que o checkbox é "Permitir Repetição", então `checked` deve ser `allowRepeat`.
+  const allowRepeatsCheckbox = document.querySelector('input[type="checkbox"]');
+  const allowRepeats = allowRepeatsCheckbox
+    ? allowRepeatsCheckbox.checked
+    : false;
+
+  // 2. Valida os inputs.
+  const validatedValues = validateInputs(
+    amountInput.value,
+    initialInput.value,
+    finalInput.value
+  );
+
+  if (!validatedValues) {
+    return; // Interrompe se a validação falhar.
+  }
+
+  const { amount, start, end } = validatedValues;
+
+  try {
+    // 3. Cria (ou recria) a instância da Lottery para o sorteio atual.
+    // Isso garante que se os parâmetros mudarem, uma nova Lottery seja configurada.
+    currentLotteryInstance = new Lottery(start, end, amount, allowRepeats);
+
+    // 4. Realiza o sorteio.
+    const sortedNumbers = currentLotteryInstance.draw();
+
+    // 5. Incrementa o contador de sorteios.
+    drawAttemptCount++;
+
+    // 6. Renderiza os resultados.
+    const mainContainer = document.querySelector("main");
+    renderDrawResults(sortedNumbers, mainContainer, drawAttemptCount, () => {
+      // Callback para o botão "Sortear Novamente".
+      // Usa a instância `currentLotteryInstance` para fazer um novo sorteio.
+      // Isso garante que os mesmos parâmetros de intervalo e repetição sejam usados.
+      if (currentLotteryInstance) {
+        const nextSortedNumbers = currentLotteryInstance.draw();
+        drawAttemptCount++; // Incrementa para o novo sorteio.
+        renderDrawResults(
+          nextSortedNumbers,
+          mainContainer,
+          drawAttemptCount,
+          this
+        ); // 'this' refere-se ao callback atual para recursividade.
+      }
+    });
+  } catch (error) {
+    // Captura erros da classe Lottery (ex: quantidade > pool sem repetição).
+    alert("Erro no sorteio: " + error.message);
+    console.error("Lottery Error:", error);
+  }
+}
+
+// =======================================================
+// 5. CONFIGURAÇÃO INICIAL (Event Listeners & Input Mask)
+//    - Responsabilidade: Configurar a aplicação ao carregar a página.
+// =======================================================
+
+// Aplica uma máscara de entrada para permitir apenas dígitos numéricos nos campos de texto.
+document.querySelectorAll("input[type='text']").forEach((input) => {
   input.addEventListener("input", () => {
-    let value = input.value.replace(/[^0-9]/g, "");
-    input.value = value.trim();
+    // Remove caracteres não numéricos e espaços em branco.
+    input.value = input.value.replace(/[^0-9]/g, "").trim();
   });
 });
+
+// Adiciona o event listener para o envio do formulário.
+document.querySelector("form").addEventListener("submit", handleSubmit);

@@ -3,113 +3,140 @@
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="stylesheet" href="style/index.css" />
+
+    <title>Numbers</title>
+    <!-- sora -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Flex:opsz@8..144&family=Roboto+Mono:ital@0;1&family=Sora:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&
+    display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./style/index.css" />
-    <title>Numbers</title>
+    <!-- Roboto mono -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&
+    display=swap"
+      rel="stylesheet"
+    />
+    <!-- Roboto flex -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body class="container">
-    <div id="page">
-      <header class="logo flex">
-        <img src="./assets/Logo.svg" alt="" />
-        <span>NUMBERS</span>
+  <body class="container grid">
+    <img src="./assets/logo.svg" alt="Logo" />
+    <div id="layout">
+      <header class="grid">
+        <div class="grid">
+          <h3>Online - gratuito</h3>
+          <h1>Sorteador de números</h1>
+        </div>
+
+        <div id="informations" class="desktop-only">
+          <section>
+            <img src="./assets/Frame-2.svg" alt="" />
+            <div>
+              <h3>Como funciona o sorteador de números?</h3>
+              <p>
+                O sorteador utiliza um algoritmo de geração aleatória para criar
+                números dentro do intervalo especificado pelo usuário.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <img src="./assets/Frame-2.svg" alt="" />
+            <div>
+              <h3>Posso escolher o intervalo dos números?</h3>
+              <p>
+                Sim, você pode definir os valores mínimo e máximo para o
+                intervalo dos números sorteados.
+              </p>
+            </div>
+          </section>
+        </div>
       </header>
 
       <main class="grid">
-        <div class="title flex-col">
-          <h2>ONLINE - GRATUITO</h2>
-          <h1>SORTEADOR DE NUMEROS</h1>
-        </div>
+        <section>
+          <h2>Quero sortear:</h2>
+          <p>
+            Defina o intervalo e a quantidade de números, clique em "Sortear" e
+            veja os resultados na tela. É rápido e fácil!
+          </p>
+        </section>
 
-        <div class="desktop-only">
-          <div id="information">
-            <section class="flex info">
-              <img src="./assets/icons/Frame-2.svg" alt="" />
-              <div>
-                <h3>Como funciona o sorteador de números?</h3>
-                <p>
-                  O sorteador utiliza um algoritmo de geração aleatória para
-                  criar números dentro do intervalo especificado pelo usuário.
-                </p>
-              </div>
-            </section>
-            <section class="flex info">
-              <img src="./assets/icons/Frame-2.svg" alt="" />
-              <div>
-                <h3>Posso escolher o intervalo dos números?</h3>
-                <p>
-                  Sim, você pode definir os valores mínimo e máximo para o
-                  intervalo dos números sorteados.
-                </p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <aside class="grid">
-      <section class="info-draw flex flex-col">
-        <h2>QUERO SORTEAR:</h2>
-        <p>
-          Defina o intervalo e a quantidade de números, clique em "Sortear" e
-          veja os resultados na tela. É rápido e fácil!
-        </p>
-      </section>
-
-      <form method="post" enctype="multipart/form-data">
-        <fieldset>
-          <legend>Configurações do Sorteio</legend>
-          <div class="flex">
-            <div class="inpt-number">
-              <label for="draw">NÚMEROS</label>
-              <div class="inpt-wrapper">
-                <input type="text" id="draw" name="draw" value="2" />
-              </div>
-            </div>
-
-            <div class="inpt-number">
-              <label for="initial">DE</label>
-              <div class="inpt-wrapper">
-                <input type="text" id="initial" name="initial" value="1" />
-              </div>
-            </div>
-
-            <div class="inpt-number">
-              <label for="final">A</label>
-              <div class="inpt-wrapper">
-                <input type="text" id="final" name="final" value="100" />
-              </div>
-            </div>
-          </div>
-
-          <div id="checkbox">
+        <form method="post" enctype="multipart/form-data">
+          <fieldset>
             <div class="flex">
-              <div class="btn">
-                <input type="checkbox" id="check" name="check" />
+              <div class="ipt-number">
+                <label for="draw">Números</label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    name="draw"
+                    id="draw"
+                    class="nan"
+                    value="2"
+                  />
+                </div>
+              </div>
+
+              <div class="ipt-number">
+                <label for="quantity">De</label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    name="quantity"
+                    id="initial"
+                    class="nan"
+                    value="1"
+                  />
+                </div>
+              </div>
+
+              <div class="ipt-number">
+                <label for="total">A</label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    name="total"
+                    id="final"
+                    class="nan"
+                    value="100"
+                  />
+                </div>
               </div>
             </div>
-            <label for="check">Não repetir numero</label>
-          </div>
-        </fieldset>
+            <div id="checkbox">
+              <div>
+                <div id="btn">
+                  <input type="checkbox" id="check" name="check" checked />
+                </div>
+              </div>
+              <label for="check">Não repetir número</label>
+            </div>
+          </fieldset>
+          <button id="draw-one">
+            SORTEAR
+            <img src="./assets/Frame-1.svg" alt="" />
+          </button>
+        </form>
+      </main>
 
-        <button type="button" class="draw-one">
-          SORTEAR
-          <img src="./assets/icons/Frame-1.svg" alt="" />
-        </button>
-        <button type="submit" style="display: none">Submit</button>
-      </form>
-    </aside>
-
-    <footer>
-      <div id="footer-information">
-        <section class="flex info">
-          <img src="./assets/icons/Frame-2.svg" alt="" />
+      <footer class="">
+        <section>
+          <img src="./assets/Frame-2.svg" alt="" />
           <div>
             <h3>Como funciona o sorteador de números?</h3>
             <p>
@@ -118,8 +145,9 @@
             </p>
           </div>
         </section>
-        <section class="flex info">
-          <img src="./assets/icons/Frame-2.svg" alt="" />
+
+        <section>
+          <img src="./assets/Frame-2.svg" alt="" />
           <div>
             <h3>Posso escolher o intervalo dos números?</h3>
             <p>
@@ -128,11 +156,9 @@
             </p>
           </div>
         </section>
-      </div>
-    </footer>
-
+      </footer>
+    </div>
     <div id="bg-shape"></div>
-
     <script src="./index.js"></script>
   </body>
 </html>

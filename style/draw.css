@@ -1,3 +1,4 @@
+/* Div que irá conter os elementos */
 .space {
   max-width: 100%;
   width: 100%;
@@ -8,34 +9,30 @@
   justify-content: center;
 }
 
-.draw-one {
-  margin-inline: auto;
-}
-
-.sub-title {
-  font: var(--overline);
-  color: var(--content-secondary);
-  text-align: center;
-  margin-top: -0.5rem;
-}
-
+/* Título da div */
 .result {
   text-align: center;
   font: var(--label-md);
   color: var(--content-primary);
 }
 
-/*div pai dos numeros sorteador */
+/* Sub-título */
+.sub-title {
+  font: var(--overline);
+  color: var(--content-secondary);
+  text-align: center;
+}
+
+/* Div pai dos números sorteados */
 .div-sorted-numbers {
   max-width: 100%;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   align-content: center;
-  margin: 2.5rem 1rem;
-  gap: 1rem;
+  margin-top: 2.5rem;
 }
 
 /* div que irá conter cada número sorteado */
@@ -47,25 +44,7 @@
     colorInverse 100ms linear 900ms forwards,
     colorReturn 100ms linear 2s forwards;
 }
-
-/* Nova animação de entrada fluida para cada número */
-@keyframes smoothIn {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.7);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-8px) scale(1.08);
-  }
-  80% {
-    transform: translateY(2px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* animação que o número terá ao aparecer */
 
 .animation-number {
   display: grid;
@@ -76,7 +55,6 @@
   width: 6.25rem;
   height: 6.25rem;
   border-radius: 1.75rem;
-  gap: 1rem;
   animation: scale 500ms forwards ease, rotation 700ms ease 700ms,
     backTransparent 500ms ease 2s forwards, diminuteScale 500ms ease 2s forwards;
 }
@@ -85,24 +63,6 @@
 .appear-button {
   opacity: 0;
   transition: opacity 500ms ease;
-}
-
-.appear-button.show {
-  opacity: 1;
-}
-
-/* Animação de rotação para o ícone play.svg */
-.rotate-icon {
-  animation: rotate360 2s linear infinite;
-}
-
-@keyframes rotate360 {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes colorInverse {
@@ -210,70 +170,14 @@
   }
 }
 
-/* Mobile */
-@media (max-width: 767px) {
-  .space {
-    padding-block: 2rem 1.5rem;
-    min-height: 15rem;
-  }
-  
-  .div-sorted-numbers {
-    margin: 1.5rem 0.5rem;
-    gap: 0.75rem;
-  }
-  
-  .animation-number {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 1.25rem;
-  }
-  
-  .number-sorted {
-    font: 600 2rem/1.5 var(--roboto-mono);
-  }
-  
-  .result {
-    font: var(--label-sm);
-  }
-  
-  .sub-title {
-    font: 600 0.875rem/150% var(--roboto-mono);
-  }
-}
-
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .space {
-    padding-block: 3rem 2rem;
-    min-height: 16rem;
-  }
-  
-  .div-sorted-numbers {
-    margin: 2rem 0.75rem;
-    gap: 0.875rem;
-  }
-  
-  .animation-number {
-    width: 5.5rem;
-    height: 5.5rem;
-    border-radius: 1.5rem;
-  }
-  
-  .number-sorted {
-    font: 600 2.5rem/1.5 var(--roboto-mono);
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) and (max-width: 1279px) {
+@media (950px <= width < 1200px) {
   .space {
     width: 22rem;
     padding-block: 0 2rem;
   }
 }
 
-/* Large Desktop */
-@media (min-width: 1280px) {
+@media (width >= 1200px) {
   .space {
     width: 26rem;
   }

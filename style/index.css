@@ -1,6 +1,5 @@
-@import url("./global.css");
-@import url("header.css");
-@import url("main.css");
-@import url("aside.css");
-@import url("footer.css");
-@import url("draw.css");
+@import url(./global.css);
+@import url(./header.css);
+@import url(./main.css);
+@import url(./footer.css);
+@import url(./draw.css);
